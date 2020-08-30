@@ -1,6 +1,8 @@
 <template>
   <div
     class="block-container__item__component"
+    @mouseenter="$emit('onMouseEnter', $event)"
+    @mouseleave="$emit('onMouseLeave', $event)"
   >
     <div class="card">
       <div
@@ -11,7 +13,7 @@
       </div>
       <div class="card__body">
         <div class="card__body__avatar">
-          <img src="../../assets/avatar.png" />
+          <img src="../../assets/img/avatar.png" />
         </div>
         <div class="card__body__info">
           <span class="name">{{ item.name }}</span>
@@ -40,71 +42,86 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .block-container__item__component {
-    width: 650px;
+.block-container__item__component {
+  width: 650px;
 
-    .card {
-      &__header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        height: 120px;
-        padding: 15px 20px;
-
-        .position {
-          font-style: normal;
-          font-weight: bold;
-          font-size: 32px;
-          line-height: 41px;
-          text-align: center;
-          text-transform: uppercase;
-          color: #FFFFFF;
-        }
+  &.hide-info {
+    .card__body {
+      display: none;
+    }
+    .card__header {
+      height: 100%;
+      .position {
+        font-size: 64px;
       }
-      &__body {
+    }
+  }
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 7px;
+
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 120px;
+      padding: 15px 20px;
+
+      .position {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 32px;
+        text-align: center;
+        white-space: normal;
+        color: #FFFFFF;
+      }
+    }
+    &__body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      flex-direction: column;
+
+      &__avatar {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 20px;
+        width: 72px;
+        height: 72px;
+        border-radius: 100%;
+        background: #E5E5E7;
+        margin-bottom: 14px;
+      }
+
+      &__info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         flex-direction: column;
 
-        &__avatar {
+        .name {
+          font-style: normal;
+          font-weight: normal;
+          font-size: 21px;
           display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 72px;
-          height: 72px;
-          border-radius: 100%;
-          background: #E5E5E7;
-          margin-bottom: 14px;
+          align-items: flex-end;
+          text-align: center;
+          color: #000000;
         }
 
-        &__info {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-direction: column;
-
-          .name {
-            font-style: normal;
-            font-weight: normal;
-            font-size: 21px;
-            display: flex;
-            align-items: flex-end;
-            text-align: center;
-            color: #000000;
-          }
-
-          .second_position {
-            font-style: normal;
-            font-weight: normal;
-            font-size: 18px;
-            text-align: center;
-            color: #A8ADB5;
-          }
+        .second_position {
+          font-style: normal;
+          font-weight: normal;
+          font-size: 18px;
+          text-align: center;
+          color: #A8ADB5;
         }
       }
     }
   }
+}
 </style>

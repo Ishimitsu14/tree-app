@@ -1,6 +1,8 @@
 <template>
   <div
     class="block-container__item__component"
+    @mouseenter="$emit('onMouseEnter', $event)"
+    @mouseleave="$emit('onMouseLeave', $event)"
   >
     <div class="card">
       <div
@@ -11,7 +13,7 @@
       </div>
       <div class="card__body">
         <div class="card__body__avatar">
-          <img src="../../assets/avatar.png" />
+          <img src="../../assets/img/avatar.png" />
         </div>
         <div class="card__body__info">
           <span class="name">{{ item.name }}</span>
@@ -50,100 +52,120 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .block-container__item__component {
-    width: 300px;
+.block-container__item__component {
+  width: 300px;
 
-    .card {
-      &__header {
+  &.hide-info {
+    .card__body, .card__footer {
+      display: none;
+    }
+    .card__header {
+      height: 100%;
+      .position {
+        font-size: 36px;
+      }
+      .number {
+        font-size: 60px;
+      }
+    }
+  }
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 7px;
+
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 90px;
+      padding: 15px 20px;
+
+      .position {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 21px;
+        white-space: normal;
+        color: #FFFFFF;
+      }
+    }
+
+    &__body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      flex-direction: column;
+
+      &__avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 72px;
+        height: 72px;
+        border-radius: 100%;
+        background: #E5E5E7;
+        margin-bottom: 14px;
+      }
+
+      &__info {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        height: 90px;
-        padding: 15px 20px;
 
-        .position {
+        .name {
           font-style: normal;
-          font-weight: bold;
+          font-weight: normal;
           font-size: 21px;
-          color: #FFFFFF;
-        }
-      }
-
-      &__body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        flex-direction: column;
-
-        &__avatar {
           display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 72px;
-          height: 72px;
-          border-radius: 100%;
-          background: #E5E5E7;
-          margin-bottom: 14px;
-        }
-
-        &__info {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-direction: column;
-
-          .name {
-            font-style: normal;
-            font-weight: normal;
-            font-size: 21px;
-            display: flex;
-            align-items: flex-end;
-            text-align: center;
-            color: #000000;
-          }
-
-          .second_position {
-            font-style: normal;
-            font-weight: normal;
-            font-size: 18px;
-            text-align: center;
-            color: #A8ADB5;
-          }
-        }
-      }
-      &__footer {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 20px;
-        flex-direction: column;
-        border-top: 1px solid #DFE1E5;
-
-        .title {
-          font-style: normal;
-          font-weight: bold;
-          font-size: 18px;
+          align-items: flex-end;
           text-align: center;
           color: #000000;
-          margin-bottom: 8px;
         }
 
-        .description {
-          width: 100%;
+        .second_position {
+          font-style: normal;
+          font-weight: normal;
+          font-size: 18px;
+          text-align: center;
+          color: #A8ADB5;
+        }
+      }
+    }
+    &__footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px;
+      flex-direction: column;
+      border-top: 1px solid #DFE1E5;
 
-          p {
-            margin: 0;
-            white-space: normal;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 18px;
-            text-align: center;
-            color: #434B53;
-          }
+      .title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        text-align: center;
+        color: #000000;
+        margin-bottom: 8px;
+      }
+
+      .description {
+        width: 100%;
+
+        p {
+          margin: 0;
+          white-space: normal;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 18px;
+          text-align: center;
+          color: #434B53;
         }
       }
     }
   }
+}
 </style>

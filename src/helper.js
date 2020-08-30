@@ -1,3 +1,13 @@
+const remove = (array, element) => {
+  const index = array.indexOf(element);
+  array.splice(index, 1);
+};
+
+const swapArrayElements = (array, indexA, indexB) => {
+  // eslint-disable-next-line no-param-reassign,prefer-destructuring
+  array[indexA] = array.splice(indexB, 1, array[indexA])[0];
+};
+
 const addEventListenerWheel = (element, callback) => {
   if (element.addEventListener) {
     if ('onwheel' in document) {
@@ -17,20 +27,8 @@ const getElementSize = (node) => {
   let width = null; // width with padding
   let height = null; // height with padding
   if (node) {
-    // const computedStyle = getComputedStyle(node);
-
     width = node.clientWidth; // width with padding
     height = node.clientHeight; // height with padding
-    // if (width && height) {
-    //   if (!withY) {
-    //     height -= parseFloat(computedStyle.paddingTop)
-    //       + parseFloat(computedStyle.paddingBottom);
-    //   }
-    //   if (!withX) {
-    //     width -= parseFloat(computedStyle.paddingLeft)
-    //       + parseFloat(computedStyle.paddingRight);
-    //   }
-    // }
   }
 
   return { height, width };
@@ -63,6 +61,8 @@ const parsePercent = (value) => {
 };
 
 export default {
+  remove,
+  swapArrayElements,
   addEventListenerWheel,
   getElementSize,
   parsePercent,
