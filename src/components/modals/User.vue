@@ -74,7 +74,7 @@ export default {
       handler(user) {
         if (user) {
           // eslint-disable-next-line global-require,import/no-dynamic-require
-          const avatar = require(`../../assets/img/${user.src}`);
+          const avatar = user.src;
           const gradient = `linear-gradient(
                   90deg,
                   rgb(24, 51, 44) 0%,

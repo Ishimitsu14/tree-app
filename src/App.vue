@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <tree :tree="tree"/>
+    <tree :tree="tree" :leader-list="leaderList"/>
   </div>
 </template>
 
@@ -113,7 +113,7 @@ export default {
                             staff: [
                               {
                                 id: 1,
-                                src: 'user1.png',
+                                src: 'https://i.ibb.co/6Fjxq6D/user1.jpg',
                                 name: 'Мельникова Анастасия Евгеньевна',
                                 phone: '+7 (902) 789-09-08',
                                 additional: [
@@ -123,7 +123,7 @@ export default {
                               },
                               {
                                 id: 2,
-                                src: 'user2.png',
+                                src: 'https://i.ibb.co/fvkYwsK/user2.jpg',
                                 name: 'Поливко Ольга Евгеньевна',
                                 phone: '+7 (902) 789-09-08',
                                 additional: [
@@ -133,7 +133,7 @@ export default {
                               },
                               {
                                 id: 3,
-                                src: 'user3.png',
+                                src: 'https://i.ibb.co/zmWdLWh/user3.jpg',
                                 name: 'Сидорова Анна Дмитриевна',
                                 phone: '+7 (902) 789-09-08',
                                 additional: [
@@ -143,7 +143,7 @@ export default {
                               },
                               {
                                 id: 4,
-                                src: 'user4.png',
+                                src: 'https://i.ibb.co/88YjHBT/user4.png',
                                 name: 'Петров Иван Николаевич',
                                 phone: '+7 (902) 789-09-08',
                                 additional: [
@@ -153,7 +153,7 @@ export default {
                               },
                               {
                                 id: 5,
-                                src: 'user5.png',
+                                src: 'https://i.ibb.co/PG2mNHW/user5.jpg',
                                 name: 'Васильев Николай Ильич',
                                 phone: '+7 (902) 789-09-08',
                                 additional: [
@@ -163,7 +163,7 @@ export default {
                               },
                               {
                                 id: 6,
-                                src: 'user6.png',
+                                src: 'https://i.ibb.co/jH6F374/user6.jpg',
                                 name: 'Петров Дмитрий Николаевич',
                                 phone: '+7 (902) 789-09-08',
                                 additional: [
@@ -277,6 +277,10 @@ export default {
           },
         ],
       },
+      leaderList: [
+        { label: 'Петя Пупкин' },
+        { label: 'Вася Серябкин' },
+      ],
     };
   },
   components: {

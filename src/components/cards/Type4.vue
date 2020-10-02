@@ -14,7 +14,7 @@
       </div>
       <div class="card__body">
         <div class="card__body__avatar">
-          <img src="../../assets/img/avatar.png" />
+          <img :src="avatar" />
         </div>
         <div class="card__body__info">
           <span class="name">{{ item.name }}</span>
@@ -47,6 +47,15 @@ export default {
     item: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    avatar() {
+      if (this.item && this.item.avatar) {
+        return this.item.avatar;
+      }
+      // eslint-disable-next-line global-require
+      return require('../../assets/img/avatar.png');
     },
   },
 };

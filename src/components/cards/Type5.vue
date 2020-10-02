@@ -14,7 +14,7 @@
       </div>
       <div class="card__body">
         <div class="card__body__avatar">
-          <img src="../../assets/img/avatar.png" />
+          <img :src="avatar" />
         </div>
         <div class="card__body__info">
           <span class="name">{{ item.name }}</span>
@@ -51,7 +51,7 @@
             v-tooltip="'Открыть профиль'"
             @click="onOpenUser({ elementId: item.id, user: user })"
           >
-            <img :src="require(`../../assets/img/${user.src}`)" />
+            <img :src="user.src" />
           </div>
           <button
             v-if="staffLength > 0"
@@ -79,6 +79,13 @@ export default {
     },
   },
   computed: {
+    avatar() {
+      if (this.item && this.item.avatar) {
+        return this.item.avatar;
+      }
+      // eslint-disable-next-line global-require
+      return require('../../assets/img/avatar.png');
+    },
     staff() {
       const staff = [];
       if (this.item.staff && this.item.staff.length > 0) {

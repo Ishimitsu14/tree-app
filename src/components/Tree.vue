@@ -65,12 +65,14 @@
       ref="edit"
       :item="currentItem"
       :flat-list="flatList"
+      :leader-list="leaderList"
       @onSave="onSaveEdit"
     />
     <add
       ref="add"
       :item="currentItem"
       :flat-list="flatList"
+      :leader-list="leaderList"
       @onSave="onSaveAdd"
     />
     <delete
@@ -118,6 +120,10 @@ export default {
   props: {
     tree: {
       type: [Array, Object],
+      required: true,
+    },
+    leaderList: {
+      type: Array,
       required: true,
     },
   },

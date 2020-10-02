@@ -17,6 +17,8 @@
         label="Руководитель"
         :list="leaderList"
         v-model="form.name"
+        key-label="label"
+        key-value="label"
       />
     </div>
     <div

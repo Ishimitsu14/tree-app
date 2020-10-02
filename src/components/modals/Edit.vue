@@ -4,7 +4,7 @@
     height="663px"
   >
     <img class="close-modal" src="../../assets/img/close.svg" @click="hide" />
-    <div v-if="cardForm && sortForm" class="modal">
+    <div v-if="cardForm && sortForm && leaderList" class="modal">
       <div class="modal__header">
         Редактировать подразделение
       </div>
@@ -60,6 +60,10 @@ export default {
       type: Array,
       required: true,
     },
+    leaderList: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
@@ -68,11 +72,6 @@ export default {
       sortForm: null,
       value: '',
     };
-  },
-  computed: {
-    leaderList() {
-      return this.flatList.map((item) => ({ value: item.name, label: item.name }));
-    },
   },
   methods: {
     show() {
