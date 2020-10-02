@@ -1,9 +1,13 @@
 # tree-app
 
+## Demo
+https://ishimitsu14.github.io/tree-app/
+
 ## Install library
 ```
 npm install --save v-tree
 ```
+
 ## Then, import and register the component
 
 ```
