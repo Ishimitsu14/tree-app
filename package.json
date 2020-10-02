@@ -2,7 +2,11 @@
   "name": "tree-app",
   "homepage": "https://ishimitsu14.github.io/tree-app/",
   "main": "./dist-npm/v-tree.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ishimitsu14/tree-app"
+  },
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,13 +16,11 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "jquery": "^3.5.1",
     "underscore": "^1.11.0",
     "uuid": "^8.3.0",
     "v-tooltip": "^2.0.3",
     "vue": "2.6.12",
     "vue-js-modal": "^2.0.0-rc.6",
-    "vue-svg-loader": "^0.16.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
@@ -41,7 +43,8 @@
     "vue-template-compiler": "2.6.12",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "vue-svg-loader": "^0.16.0"
   },
   "browserslist": [
     "> 1%",
