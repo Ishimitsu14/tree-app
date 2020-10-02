@@ -49,7 +49,7 @@ export default {
         }
       });
       return this.flatList.filter((item) => !deepChildren.includes(item.id) && item.type !== 5)
-        .map((item) => ({ value: item.id, label: item.name }));
+        .map((item) => ({ value: item.id, label: item.position }));
     },
   },
   watch: {

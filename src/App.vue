@@ -111,12 +111,66 @@ export default {
                       услуги косметической ортодонтии`,
                             type: 5,
                             staff: [
-                              { id: 1, src: '../../assets/img/user1.png' },
-                              { id: 2, src: '../../assets/img/user2.png' },
-                              { id: 3, src: '../../assets/img/user3.png' },
-                              { id: 4, src: '../../assets/img/user4.png' },
-                              { id: 5, src: '../../assets/img/user4.png' },
-                              { id: 6, src: '../../assets/img/user4.png' },
+                              {
+                                id: 1,
+                                src: 'user1.png',
+                                name: 'Мельникова Анастасия Евгеньевна',
+                                phone: '+7 (902) 789-09-08',
+                                additional: [
+                                  { label: 'Telegram', value: '+7 (902) 789-09-08' },
+                                  { label: 'Дата рождения', value: '01.02.1998' },
+                                ],
+                              },
+                              {
+                                id: 2,
+                                src: 'user2.png',
+                                name: 'Поливко Ольга Евгеньевна',
+                                phone: '+7 (902) 789-09-08',
+                                additional: [
+                                  { label: 'Telegram', value: '+7 (902) 789-09-08' },
+                                  { label: 'Дата рождения', value: '01.02.1998' },
+                                ],
+                              },
+                              {
+                                id: 3,
+                                src: 'user3.png',
+                                name: 'Сидорова Анна Дмитриевна',
+                                phone: '+7 (902) 789-09-08',
+                                additional: [
+                                  { label: 'Telegram', value: '+7 (902) 789-09-08' },
+                                  { label: 'Дата рождения', value: '01.02.1998' },
+                                ],
+                              },
+                              {
+                                id: 4,
+                                src: 'user4.png',
+                                name: 'Петров Иван Николаевич',
+                                phone: '+7 (902) 789-09-08',
+                                additional: [
+                                  { label: 'Telegram', value: '+7 (902) 789-09-08' },
+                                  { label: 'Дата рождения', value: '01.02.1998' },
+                                ],
+                              },
+                              {
+                                id: 5,
+                                src: 'user5.png',
+                                name: 'Васильев Николай Ильич',
+                                phone: '+7 (902) 789-09-08',
+                                additional: [
+                                  { label: 'Telegram', value: '+7 (902) 789-09-08' },
+                                  { label: 'Дата рождения', value: '01.02.1998' },
+                                ],
+                              },
+                              {
+                                id: 6,
+                                src: 'user6.png',
+                                name: 'Петров Дмитрий Николаевич',
+                                phone: '+7 (902) 789-09-08',
+                                additional: [
+                                  { label: 'Telegram', value: '+7 (902) 789-09-08' },
+                                  { label: 'Дата рождения', value: '01.02.1998' },
+                                ],
+                              },
                             ],
                             children: [],
                           },
@@ -179,20 +233,7 @@ export default {
                             description: `Профессионально оказанные
                       услуги косметической ортодонтии`,
                             type: 5,
-                            children: [
-                              {
-                                id: 77,
-                                name: 'Имя Фамилия (6)',
-                                position: 'Руководитель',
-                                second_position: 'Руководитель',
-                                color: '#E8C567',
-                                number: 3,
-                                description: `Профессионально оказанные
-                      услуги косметической ортодонтии`,
-                                type: 5,
-                                children: [],
-                              },
-                            ],
+                            children: [],
                           },
                         ],
                       },

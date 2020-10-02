@@ -1,9 +1,14 @@
 <template>
-  <div class="input-group">
+  <div
+    class="input-group"
+    :class="isFocus ? 'input-group--is-focus' : ''"
+  >
     <textarea
       :class="!isEmpty ? 'not-empty' : ''"
       :required="required"
       :value="value"
+      @focus="isFocus = true"
+      @blur="isFocus = false"
       @input="handleInput"
     />
     <label>{{ label }}</label>
@@ -30,6 +35,7 @@ export default {
   data() {
     return {
       isEmpty: true,
+      isFocus: false,
     };
   },
   watch: {
@@ -59,6 +65,10 @@ export default {
     background: #F5F5F5;
     border: 1px solid #D7DBDF;
     border-radius: 4px;
+
+    &--is-focus {
+      background: white;
+    }
 
     textarea {
       width: 100%;

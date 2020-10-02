@@ -9,6 +9,7 @@
         :style="`background: ${item.color}`"
         class="card__header"
       >
+        <span v-if="!!item.number && item.number !== ''" class="number">{{ item.number }}</span>
         <span class="position">{{ item.position }}</span>
       </div>
       <div class="card__body">
@@ -48,15 +49,15 @@
             :key="user.id"
             class="users__item"
             v-tooltip="'Открыть профиль'"
-            @click="onOpenUser({ elementId: item.id, userId: user.id })"
+            @click="onOpenUser({ elementId: item.id, user: user })"
           >
-            <img src="../../assets/img/user1.png" />
+            <img :src="require(`../../assets/img/${user.src}`)" />
           </div>
           <button
             v-if="staffLength > 0"
             class="users__count"
             v-tooltip="'Открыть список сотрудников'"
-            @click="onOpenUserList({ elementId: item.id })"
+            @click="onOpenStaffList(item.id)"
           >
             {{ staffLength }} +
           </button>
@@ -98,8 +99,8 @@ export default {
     onOpenUser(data) {
       eventBus.$emit('onOpenUser', data);
     },
-    onOpenUserList(data) {
-      eventBus.$emit('onOpenUserList', data);
+    onOpenStaffList(data) {
+      eventBus.$emit('onOpenStaffList', data);
     },
   },
 };
@@ -143,6 +144,13 @@ export default {
         font-size: 21px;
         white-space: normal;
         color: #FFFFFF;
+      }
+      .number {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 25px;
+        color: #FFFFFF;
+        opacity: 0.5;
       }
     }
 
@@ -250,6 +258,10 @@ export default {
           margin: 0 8px;
           overflow: hidden;
           border-radius: 100%;
+
+          img {
+            width: 100%;
+          }
 
           &:first-child {
             margin-left: 0;

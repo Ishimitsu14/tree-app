@@ -1,17 +1,25 @@
 <template>
-  <div class="input-group">
+  <div
+    class="input-group"
+    :class="isFocus ? 'input-group--is-focus' : ''"
+  >
     <input
       ref="input"
       :class="!isEmpty ? 'not-empty' : ''"
       :required="required"
-      :value="selectedLabel"
-      readonly="readonly"
-      @click="showList"
+      v-model="inputValue"
+      @focus="isFocus = true"
+      @blur="isFocus = false"
+      @input="handleInput"
     />
     <label>{{ label }}</label>
-    <ul v-show="isShowList" ref="list" class="list">
+    <ul
+      v-if="matchedItems.length > 0 && isShowList"
+      ref="list"
+      class="list"
+    >
       <li
-        v-for="(item, index) in list"
+        v-for="(item, index) in matchedItems"
         :key="index"
         @click="setValue(item[keyValue])"
       >
@@ -22,6 +30,8 @@
 </template>
 
 <script>
+import _ from 'underscore';
+
 export default {
   name: 'CustomSelect',
   props: {
@@ -58,7 +68,10 @@ export default {
     return {
       isEmpty: true,
       isShowList: false,
+      isFocus: false,
+      matchedItems: [],
       selectedValue: '',
+      inputValue: '',
     };
   },
   computed: {
@@ -71,34 +84,52 @@ export default {
     },
   },
   mounted() {
+    this.matchedItems = this.list;
     if (this.value && this.value !== '') {
       this.selectedValue = this.value;
       this.isEmpty = false;
+      this.inputValue = this.selectedLabel;
     }
   },
   watch: {
     value(value) {
       this.isEmpty = !value;
     },
+    isShowList(value) {
+      if (value) {
+        document.addEventListener('click', this.onClick);
+      } else {
+        document.removeEventListener('click', this.onClick);
+      }
+    },
   },
   methods: {
-    showList() {
-      this.isShowList = true;
-      document.addEventListener('click', this.onClick);
-    },
-    setValue(value) {
-      this.selectedValue = value;
-      this.isShowList = false;
-      this.$emit('input', value);
-      document.removeEventListener('click', this.onClick);
-    },
     onClick($event) {
-      if (!this.$refs.list.contains($event.target)
+      if (this.$refs.list && this.$refs.input
+        && !this.$refs.list.contains($event.target)
         && !this.$refs.input.contains($event.target)
         && this.isShowList) {
         this.isShowList = false;
-        document.removeEventListener('click', this.onClick);
       }
+    },
+    handleInput(e) {
+      this.isShowList = true;
+      if (e.target.value !== '') {
+        // eslint-disable-next-line consistent-return
+        this.matchedItems = _.filter(this.list, (item) => {
+          if (this.$helper.startsWith(item.label, e.target.value)) {
+            return item;
+          }
+        });
+      } else {
+        this.matchedItems = this.list;
+      }
+    },
+    setValue(value) {
+      this.isShowList = false;
+      this.selectedValue = value;
+      this.inputValue = this.selectedLabel;
+      this.$emit('input', value);
     },
   },
 };
@@ -116,6 +147,10 @@ export default {
     border: 1px solid #D7DBDF;
     border-radius: 4px;
 
+    &--is-focus {
+      background: white;
+    }
+
     input {
       width: 100%;
       padding-bottom: 6px;
@@ -129,7 +164,6 @@ export default {
       font-size: 18px;
       line-height: 135%;
       z-index: 99;
-      cursor: pointer;
 
       &:focus ~ label, &.not-empty ~ label {
         left: 16px;
@@ -155,10 +189,10 @@ export default {
     .list {
       z-index: 999;
       position: absolute;
+      top: 100%;
       left: 0;
-      top: -1px;
       margin: 0;
-      width: 50%;
+      width: 100%;
       height: 168px;
       overflow: auto;
       padding: 0;

@@ -1,38 +1,35 @@
 <template>
   <modal
     :name="name"
-    height="663px"
+    height="330px"
+    width="500px"
   >
     <img class="close-modal" src="../../assets/img/close.svg" @click="hide" />
-    <div v-if="cardForm && sortForm" class="modal">
+    <div v-if="flatList && item" class="modal">
       <div class="modal__header">
-        Создать подразделение
+        Удалить подразделение?
       </div>
       <div class="modal__body">
-        <card-form
-          :form="cardForm"
-          :leader-list="leaderList"
-        />
-        <custom-collapse
-          title="Положение на схеме"
-          description="Вышестоящее подразделение и сортировочный номер"
-        >
-          <sort-form
-            :form="sortForm"
-            :flat-list="flatList"
-          />
-        </custom-collapse>
+        <p>
+          Подразделение будет удалено без возможности восстановления
+        </p>
+        <div v-if="isNotEmpty" class="modal__info">
+          <img src="../../assets/img/alert.svg" />
+          Подразделение невозможно удалить, так как в нем есть
+          сотрудники или дочернии подразделения
+        </div>
       </div>
       <div class="modal__footer">
         <custom-button
           text="Отмена"
-          class="modal__cancel-button"
           @click="hide"
+          class="modal__cancel-button"
         />
         <custom-button
-          text="Сохранить"
-          class="modal__success-button"
-          @click="onSave"
+          text="Да, удалить"
+          class="modal__delete-button"
+          :disabled="isNotEmpty"
+          @click="onDelete"
         />
       </div>
     </div>
@@ -40,16 +37,12 @@
 </template>
 
 <script>
-import CardForm from '../ui/CardForm.vue';
-import SortForm from '../ui/SortForm.vue';
+
 import CustomButton from '../ui/CustomButton.vue';
-import CustomCollapse from '../ui/CustomCollapse.vue';
 
 export default {
-  name: 'Add',
-  components: {
-    CustomCollapse, CustomButton, SortForm, CardForm,
-  },
+  name: 'Delete',
+  components: { CustomButton },
   props: {
     item: {
       type: [Object, null],
@@ -62,38 +55,13 @@ export default {
   },
   data() {
     return {
-      name: 'add-item',
-      cardForm: null,
-      sortForm: null,
-      value: '',
+      name: 'delete-item',
     };
   },
   computed: {
-    leaderList() {
-      return this.flatList.map((item) => ({ value: item.name, label: item.name }));
-    },
-  },
-  watch: {
-    item: {
-      handler() {
-        if (this.item && this.item.id) {
-          this.cardForm = {
-            name: '',
-            position: '',
-            color: '#E8C567',
-            number: '',
-            description: '',
-            type: null,
-            children: [],
-          };
-          this.sortForm = {
-            currentId: this.flatList[this.flatList.length - 1].id + 10,
-            parentId: this.item.id,
-            positionNumber: '',
-          };
-        }
-      },
-      immediate: true,
+    isNotEmpty() {
+      const { childrenIds } = this.flatList.find((item) => item.id === this.item.id);
+      return childrenIds.length > 0 || (this.item.staff && this.item.staff.length > 0);
     },
   },
   methods: {
@@ -103,8 +71,8 @@ export default {
     hide() {
       this.$modal.hide(this.name);
     },
-    onSave() {
-      this.$emit('onSave', { cardForm: this.cardForm, sortForm: this.sortForm });
+    onDelete() {
+      this.$emit('onDelete', this.item.id);
       this.hide();
     },
   },
@@ -135,15 +103,19 @@ export default {
     font-size: 21px;
     line-height: 27px;
     color: #000000;
-    border-bottom: 1px solid #E3E6E9;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 4px;
   }
   &__body {
     display: flex;
     flex-direction: column;
     padding: 0 20px;
     margin-bottom: 20px;
+    text-align: left;
+
+    p {
+      margin: 0 0 16px;
+    }
   }
   &__footer {
     display: flex;
@@ -162,6 +134,7 @@ export default {
     color: #A8ADB5;
     border: 1px solid #D5DAEB;
     border-radius: 4px;
+    padding: 13px 16px;
     margin-right: 16px;
     background: transparent;
     transition: all ease-in-out .3s;
@@ -170,16 +143,33 @@ export default {
       background: #c8cbc8;
     }
   }
-  &__success-button {
+  &__delete-button {
     color: #FFFFFF;
-    border: 1px solid #37C29A;
-    background: #37C29A;
+    border: 1px solid #ED625E;
+    background: #ED625E;
     border-radius: 4px;
     padding: 13px 16px;
     margin-right: 16px;
-    transition: all ease-in-out .3s;
     &:hover {
-      background: #2da080;
+      background: #ca534f;
+    }
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #D7DBDF;
+    border-radius: 4px;
+    font-family: PT Sans, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 21px;
+    color: #1C1B20;
+
+    img {
+      margin-right: 15px;
     }
   }
 }

@@ -62,18 +62,32 @@
       </div>
     </div>
     <edit
-      v-if="currentItem"
       ref="edit"
       :item="currentItem"
       :flat-list="flatList"
       @onSave="onSaveEdit"
     />
     <add
-      v-if="currentItem"
       ref="add"
       :item="currentItem"
       :flat-list="flatList"
       @onSave="onSaveAdd"
+    />
+    <delete
+      ref="delete"
+      :item="currentItem"
+      :flat-list="flatList"
+      @onDelete="onSaveDelete"
+    />
+    <staff-list
+      ref="staffList"
+      :item="currentItem"
+      :flat-list="flatList"
+    />
+    <user
+      ref="user"
+      :user="currentUser"
+      @openProfile="onOpenUserProfile"
     />
   </div>
 </template>
@@ -86,11 +100,20 @@ import Actions from './Actions.vue';
 import Search from './Search.vue';
 import Edit from './modals/Edit.vue';
 import Add from './modals/Add.vue';
+import Delete from './modals/Delete.vue';
+import StaffList from './modals/StaffList.vue';
+import User from './modals/User.vue';
 
 export default {
   name: 'Tree',
   components: {
-    Add, Edit, Search, Block,
+    User,
+    StaffList,
+    Delete,
+    Add,
+    Edit,
+    Search,
+    Block,
   },
   props: {
     tree: {
@@ -133,6 +156,8 @@ export default {
       currentActionId: null,
       currentItem: null,
       flatList: [],
+      currentAction: null,
+      currentUser: null,
     };
   },
   computed: {
@@ -144,11 +169,11 @@ export default {
     },
   },
   created() {
-    eventBus.$on('onOpenUser', (data) => this.$emit('onOpenUser', data));
-    eventBus.$on('onOpenUserList', (data) => this.$emit('onOpenUserList', data));
+    eventBus.$on('onOpenUser', (data) => this.onUser(data));
+    eventBus.$on('onOpenStaffList', (id) => this.onStaffList(id));
     eventBus.$on('onEdit', (id) => this.onEdit(id));
     eventBus.$on('onAdd', (id) => this.onAdd(id));
-    eventBus.$on('onDelete', (data) => this.$emit('onDelete', data));
+    eventBus.$on('onDelete', (id) => this.onDelete(id));
   },
   mounted() {
     this.setTransform();
@@ -246,7 +271,7 @@ export default {
       div.classList = 'tree-line';
       div.style.background = '#A8ADB5';
       div.style.position = 'absolute';
-      div.style.width = '2px';
+      div.style.width = '4px';
       div.style.left = `${offsetLeft + (width / 2)}px`;
       if (isTop) {
         div.style.top = `${offsetTop - 42}px`;
@@ -254,11 +279,11 @@ export default {
         div.style.top = `${offsetTop + (height)}px`;
       }
       if (isOneChild && childrenType < 5) {
-        div.style.height = '84px';
+        div.style.height = '86px';
       } else if (childrenType >= 5) {
-        div.style.height = '24px';
+        div.style.height = '26px';
       } else {
-        div.style.height = '42px';
+        div.style.height = '44px';
       }
       parent.prepend(div);
     },
@@ -292,7 +317,7 @@ export default {
         div.classList = 'tree-line';
         div.style.background = '#A8ADB5';
         div.style.position = 'absolute';
-        div.style.height = '2px';
+        div.style.height = '4px';
         div.style.width = `${divWidth}px`;
         div.style.left = `${divLeft}px`;
         div.style.top = `${offsetTop + (height) + 40}px`;
@@ -327,7 +352,7 @@ export default {
       div.classList = 'tree-line';
       div.style.background = '#A8ADB5';
       div.style.position = 'absolute';
-      div.style.height = '2px';
+      div.style.height = '4px';
       div.style.width = `${centerPoint - (elementBlock.offsetLeft - 26)}px`;
       div.style.left = `${elementBlock.offsetLeft - 24}px`;
       div.style.top = `${topPoint}px`;
@@ -342,7 +367,7 @@ export default {
         div.style.background = '#A8ADB5';
         div.style.position = 'absolute';
         div.style.height = `${(lastElement.offsetTop + headerHeight) - (topPoint + 42)}px`;
-        div.style.width = '2px';
+        div.style.width = '4px';
         div.style.left = `${lastElement.offsetLeft - 24}px`;
         div.style.top = `${topPoint}px`;
         lastElement.prepend(div);
@@ -354,7 +379,7 @@ export default {
         div.style.background = '#A8ADB5';
         div.style.position = 'absolute';
         div.style.height = `${(elementBlock.offsetTop + headerHeight) - (topPoint + 42)}px`;
-        div.style.width = '2px';
+        div.style.width = '4px';
         div.style.left = `${element.offsetLeft - 24}px`;
         div.style.top = `${topPoint}px`;
         element.prepend(div);
@@ -368,7 +393,7 @@ export default {
         div.classList = 'tree-line';
         div.style.background = '#A8ADB5';
         div.style.position = 'absolute';
-        div.style.height = '3px';
+        div.style.height = '4px';
         div.style.width = '24px';
         div.style.left = `${element.offsetLeft - 24}px`;
         div.style.top = `${elementBlock.offsetTop + (headerHeight / 2) + 1}px`;
@@ -399,6 +424,17 @@ export default {
         element.addEventListener('mouseenter', this.onMouseEnter);
         element.addEventListener('mouseleave', this.onMouseLeave);
       });
+    },
+    async updateComponent() {
+      await this.$nextTick();
+      this.generateLines(this.items, true);
+      this.buildFlatList();
+      await this.$nextTick();
+      this.createListeners();
+      await this.$nextTick();
+      this.currentActionId = null;
+      this.currentItem = null;
+      this.actionComponent.$el.remove();
     },
     async onIsDetail() {
       await this.$nextTick();
@@ -523,19 +559,44 @@ export default {
       }
     },
     async onEdit(id) {
+      this.currentAction = 'edit';
       await this.searchById(id);
-      await this.$nextTick();
       this.$refs.edit.show();
     },
     async onAdd(id) {
+      this.currentAction = 'add';
       await this.searchById(id);
-      await this.$nextTick();
       this.$refs.add.show();
+    },
+    async onDelete(id) {
+      this.currentAction = 'delete';
+      await this.searchById(id);
+      this.$refs.delete.show();
+    },
+    async onStaffList(id) {
+      this.currentAction = 'staff-list';
+      await this.searchById(id);
+      this.$refs.staffList.show();
+    },
+    async onUser(data) {
+      this.currentAction = 'user';
+      this.currentUser = data.user;
+      this.$refs.user.show();
+    },
+    onOpenUserProfile(id) {
+      this.$emit('onOpenUserProfile', id);
+      this.currentAction = null;
+      this.currentUser = null;
+      this.$refs.user.hide();
+    },
+    async onSaveDelete(id) {
+      await this.deleteElementById(id);
+      await this.updateComponent();
     },
     async onSaveAdd({ cardForm, sortForm }) {
       const newItem = JSON.parse(JSON.stringify(cardForm));
       await this.searchById(sortForm.parentId);
-      newItem.type = this.currentItem.type + 1;
+      newItem.type = this.currentItem.type < 5 ? this.currentItem.type + 1 : 5;
       newItem.id = sortForm.currentId;
       this.currentItem.children.push(newItem);
       const currentPositionNumber = this.currentItem.children
@@ -547,18 +608,12 @@ export default {
           sortForm.positionNumber - 1,
         );
       }
-      await this.$nextTick();
-      this.$forceUpdate();
-      this.generateLines(this.items, true);
-      this.buildFlatList();
-      await this.$nextTick();
-      this.createListeners();
-      this.currentItem = null;
+      await this.updateComponent();
     },
     async onSaveEdit({ cardForm, sortForm }) {
       this.saveCardFormEdit(cardForm);
       await this.saveSortFormEdit(sortForm);
-      this.currentItem = null;
+      await this.updateComponent();
     },
     async saveSortFormEdit(sortForm) {
       let newItem = null;
@@ -592,26 +647,21 @@ export default {
         }
       }
       if (sortForm.parentId !== flatItem.parentId || isChangedPosition) {
-        await this.$nextTick();
-        this.$forceUpdate();
-        this.generateLines(this.items, true);
-        this.buildFlatList();
-        await this.$nextTick();
-        this.createListeners();
+        await this.updateComponent();
       }
     },
     saveCardFormEdit(cardForm) {
       if (cardForm.position) {
-        this.currentItem.position = cardForm.position;
+        this.$set(this.currentItem, 'position', cardForm.position);
       }
       if (cardForm.name) {
-        this.currentItem.name = cardForm.name;
+        this.$set(this.currentItem, 'name', cardForm.name);
       }
       if (cardForm.number) {
-        this.currentItem.number = cardForm.number;
+        this.$set(this.currentItem, 'number', cardForm.number);
       }
       if (cardForm.description) {
-        this.currentItem.description = cardForm.description;
+        this.$set(this.currentItem, 'description', cardForm.description);
       }
     },
     changeZoom(pageX, pageY, delta) {

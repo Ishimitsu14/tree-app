@@ -9,7 +9,7 @@
         :style="`background: ${item.color}`"
         class="card__header"
       >
-        <span class="number">{{ item.number }}</span>
+        <span v-if="!!item.number && item.number !== ''" class="number">{{ item.number }}</span>
         <span class="position">{{ item.position }}</span>
       </div>
       <div class="card__body">

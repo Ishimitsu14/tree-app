@@ -9,6 +9,7 @@
         :style="`background: ${item.color}`"
         class="card__header"
       >
+        <span v-if="!!item.number && item.number !== ''" class="number">{{ item.number }}</span>
         <span class="position">{{ item.position }}</span>
       </div>
       <div class="card__body">
@@ -89,6 +90,13 @@ export default {
         font-size: 21px;
         white-space: normal;
         color: #FFFFFF;
+      }
+      .number {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 25px;
+        color: #FFFFFF;
+        opacity: 0.5;
       }
     }
 

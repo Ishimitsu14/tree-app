@@ -1,8 +1,9 @@
 <template>
   <modal
     :name="name"
-    height="80%"
+    height="663px"
   >
+    <img class="close-modal" src="../../assets/img/close.svg" @click="hide" />
     <div v-if="cardForm && sortForm" class="modal">
       <div class="modal__header">
         Редактировать подразделение
@@ -12,21 +13,27 @@
           :form="cardForm"
           :leader-list="leaderList"
         />
-        <sort-form
-          :form="sortForm"
-          :flat-list="flatList"
-        />
+        <custom-collapse
+          title="Положение на схеме"
+          description="Вышестоящее подразделение и сортировочный номер"
+        >
+          <sort-form
+            :form="sortForm"
+            :flat-list="flatList"
+          />
+        </custom-collapse>
       </div>
       <div class="modal__footer">
-        <button class="modal__cancel-button">
-          Отмена
-        </button>
-        <button
+        <custom-button
+          text="Отмена"
+          class="modal__cancel-button"
+          @click="hide"
+        />
+        <custom-button
+          text="Сохранить"
           class="modal__success-button"
           @click="onSave"
-        >
-          Сохранить
-        </button>
+        />
       </div>
     </div>
   </modal>
@@ -36,10 +43,14 @@
 
 import CardForm from '../ui/CardForm.vue';
 import SortForm from '../ui/SortForm.vue';
+import CustomCollapse from '../ui/CustomCollapse.vue';
+import CustomButton from '../ui/CustomButton.vue';
 
 export default {
   name: 'Edit',
-  components: { SortForm, CardForm },
+  components: {
+    CustomButton, CustomCollapse, SortForm, CardForm,
+  },
   props: {
     item: {
       type: [Object, null],
@@ -101,11 +112,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.close-modal {
+  cursor: pointer;
+  position: absolute;
+  right: -35px;
+  top: 10px;
+}
+
 .modal {
   overflow: auto;
-  height: 100%;
+  height: auto;
+  background: white;
 
   &__header {
+    position: relative;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -130,32 +150,38 @@ export default {
     align-items: center;
     justify-content: flex-end;
     padding: 20px;
-    background: #E4ECEA;
+    background: #F1F5F4;
+
+    button {
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
   &__cancel-button {
-    font-family: PT Sans, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 23px;
     color: #A8ADB5;
     border: 1px solid #D5DAEB;
     border-radius: 4px;
-    padding: 13px;
+    padding: 13px 16px;
     margin-right: 16px;
+    background: transparent;
+    transition: all ease-in-out .3s;
+    &:hover {
+      color: white;
+      background: #c8cbc8;
+    }
   }
   &__success-button {
-    font-family: PT Sans, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 23px;
     color: #FFFFFF;
     border: 1px solid #37C29A;
     background: #37C29A;
     border-radius: 4px;
-    padding: 13px;
+    padding: 13px 16px;
     margin-right: 16px;
+    transition: all ease-in-out .3s;
+    &:hover {
+      background: #2da080;
+    }
   }
 }
 </style>

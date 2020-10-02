@@ -7,7 +7,6 @@
         :class="checkFormField(form.number) ? 'form-card__big-input' : ''"
       />
       <custom-input
-        v-if="checkFormField(form.number)"
         label="Номер"
         v-model="form.number"
         class="form-card__small-input"
@@ -49,6 +48,11 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  created() {
+    if (!this.form.number) {
+      this.form.number = '';
+    }
   },
   methods: {
     checkFormField(value) {
