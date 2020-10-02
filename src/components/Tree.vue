@@ -598,6 +598,7 @@ export default {
     async onSaveDelete(id) {
       await this.deleteElementById(id);
       await this.updateComponent();
+      this.$emit('onDelete', id);
     },
     async onSaveAdd({ cardForm, sortForm }) {
       const newItem = JSON.parse(JSON.stringify(cardForm));
@@ -615,11 +616,13 @@ export default {
         );
       }
       await this.updateComponent();
+      this.$emit('onAdd', newItem.id);
     },
     async onSaveEdit({ cardForm, sortForm }) {
       this.saveCardFormEdit(cardForm);
       await this.saveSortFormEdit(sortForm);
       await this.updateComponent();
+      this.$emit('onEdit', sortForm.currentId);
     },
     async saveSortFormEdit(sortForm) {
       let newItem = null;
