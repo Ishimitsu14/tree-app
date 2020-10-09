@@ -81,6 +81,14 @@ Vue.use(vTree);
 }
 ```
 
+### Leader List
+| Prop       | Type               | Example Value | isRequired |
+| ---------- |------------------  | ------------  | ------     |
+| label      | string             | John Conor    | true       |
+
+###### Must be array, used for 'leader' in change and add modals
+
+
 ## Event
 | Event             | Return      | Description                              |
 | ----------        |------------ | --------------------------------------   |
