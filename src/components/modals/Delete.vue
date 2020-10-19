@@ -4,7 +4,7 @@
     height="330px"
     width="500px"
   >
-    <img class="close-modal" src="../../assets/img/close.svg" @click="hide" />
+    <img class="close-modal" :src="require('../../assets/img/close.svg').default" @click="hide" />
     <div v-if="flatList && item" class="modal">
       <div class="modal__header">
         Удалить подразделение?
@@ -14,7 +14,7 @@
           Подразделение будет удалено без возможности восстановления
         </p>
         <div v-if="isNotEmpty" class="modal__info">
-          <img src="../../assets/img/alert.svg" />
+          <img :src="require('../../assets/img/alert.svg').default" />
           Подразделение невозможно удалить, так как в нем есть
           сотрудники или дочернии подразделения
         </div>

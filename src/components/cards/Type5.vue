@@ -32,7 +32,7 @@
         <div class="title">
           ЦКП
           <button v-tooltip="item.description">
-            <img src="../../assets/img/info.svg">
+            <img :src="require('../../assets/img/info.svg').default">
           </button>
         </div>
       </div>
@@ -84,7 +84,7 @@ export default {
         return this.item.avatar;
       }
       // eslint-disable-next-line global-require
-      return require('../../assets/img/avatar.svg');
+      return require('../../assets/img/avatar.svg').default;
     },
     staff() {
       const staff = [];

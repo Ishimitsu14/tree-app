@@ -18,13 +18,13 @@
         class="arrow__top"
         @click="changeValue('up')"
       >
-        <img src="../../assets/img/small-arrow-top.svg" />
+        <img :src="require('../../assets/img/small-arrow-top.svg').default" />
       </div>
       <div
         class="arrow__down"
         @click="changeValue('down')"
       >
-        <img src="../../assets/img/small-arrow-bot.svg" />
+        <img :src="require('../../assets/img/small-arrow-bot.svg').default" />
       </div>
     </div>
   </div>

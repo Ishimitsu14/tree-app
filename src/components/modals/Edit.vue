@@ -3,7 +3,7 @@
     :name="name"
     height="663px"
   >
-    <img class="close-modal" src="../../assets/img/close.svg" @click="hide" />
+    <img class="close-modal" :src="require('../../assets/img/close.svg').default" @click="hide" />
     <div v-if="cardForm && sortForm && leaderList" class="modal">
       <div class="modal__header">
         Редактировать подразделение

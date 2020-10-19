@@ -1,7 +1,7 @@
 <template>
   <div class="collapse">
     <div class="collapse__header" @click="onShow">
-      <img v-if="isIcon" src="../../assets/img/collapse.svg" />
+      <img v-if="isIcon" :src="require('../../assets/img/collapse.svg').default" />
       <div>
         <div class="collapse__title">
           {{ title }}
@@ -51,7 +51,8 @@ export default {
     icon: {
       type: String,
       default() {
-        return '../../assets/img/collapse.svg';
+        // eslint-disable-next-line global-require
+        return require('../../assets/img/collapse.svg').default;
       },
     },
     isIcon: {

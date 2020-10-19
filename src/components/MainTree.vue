@@ -96,6 +96,8 @@
 
 <script>
 import Vue from 'vue';
+import VModal from 'vue-js-modal';
+import VTooltip from 'v-tooltip';
 import { eventBus } from '../eventBus';
 import Block from './Block.vue';
 import Actions from './Actions.vue';
@@ -106,6 +108,9 @@ import Delete from './modals/Delete.vue';
 import StaffList from './modals/StaffList.vue';
 import User from './modals/User.vue';
 import helper from '../helper';
+
+Vue.use(VModal, { componentName: 'modal' });
+Vue.use(VTooltip, { defaultOffset: 5 });
 
 export default {
   name: 'MainTree',

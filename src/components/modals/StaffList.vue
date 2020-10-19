@@ -3,7 +3,7 @@
     :name="name"
     height="663px"
   >
-    <img class="close-modal" src="../../assets/img/close.svg" @click="hide" />
+    <img class="close-modal" :src="require('../../assets/img/close.svg').default" @click="hide" />
     <div v-if="flatList && item" class="modal">
       <div class="modal__header">
         Сотрудники
@@ -12,7 +12,7 @@
         <div class="modal__search">
           <div class="modal__search-group">
             <div class="modal__search-group-prepend">
-              <img src="../../assets/img/search.svg" />
+              <img :src="require('../../assets/img/search.svg').default" />
             </div>
             <input
               type="text"

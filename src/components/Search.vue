@@ -2,7 +2,7 @@
   <form class="tree-search" @submit.prevent="Search">
     <div class="tree-search__input-group">
       <div class="tree-search__input-group-prepend">
-        <img src="../assets/img/search.svg" />
+        <img :src="require('../assets/img/search.svg').default" />
       </div>
       <input
         type="text"

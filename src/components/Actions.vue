@@ -6,19 +6,19 @@
       v-tooltip="'Редактировать подразделение'"
       @click="onActionControl('onEdit')"
     >
-      <img src="../assets/img/edit.svg">
+      <img :src="require('../assets/img/edit.svg').default">
     </button>
     <button
       v-tooltip="'Создать подразделение'"
       @click="onActionControl('onAdd')"
     >
-      <img src="../assets/img/add.svg">
+      <img :src="require('../assets/img/add.svg').default">
     </button>
     <button
       v-tooltip="'Удалить подразделение'"
       @click="onActionControl('onDelete')"
     >
-      <img src="../assets/img/delete.svg">
+      <img :src="require('../assets/img/delete.svg').default">
     </button>
   </div>
 </template>

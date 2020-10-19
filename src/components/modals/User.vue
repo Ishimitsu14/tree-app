@@ -3,7 +3,7 @@
     :name="name"
     height="456px"
   >
-    <img class="close-modal" src="../../assets/img/close.svg" @click="hide" />
+    <img class="close-modal" :src="require('../../assets/img/close.svg').default" @click="hide" />
     <div v-if="user" class="modal">
       <div class="modal__header" :style="style">
         <span>{{ user.name }}</span>
