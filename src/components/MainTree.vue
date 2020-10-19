@@ -96,7 +96,7 @@
 
 <script>
 import Vue from 'vue';
-import { eventBus } from '../main';
+import { eventBus } from '../eventBus';
 import Block from './Block.vue';
 import Actions from './Actions.vue';
 import Search from './Search.vue';
