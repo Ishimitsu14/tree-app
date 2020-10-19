@@ -105,6 +105,7 @@ import Add from './modals/Add.vue';
 import Delete from './modals/Delete.vue';
 import StaffList from './modals/StaffList.vue';
 import User from './modals/User.vue';
+import helper from '../helper';
 
 export default {
   name: 'MainTree',
@@ -183,7 +184,7 @@ export default {
   },
   mounted() {
     this.setTransform();
-    this.$helper.addEventListenerWheel(this.$refs.tree, this.onMouseWheel);
+    helper.addEventListenerWheel(this.$refs.tree, this.onMouseWheel);
     document.addEventListener('mouseup', this.onMouseUp);
     document.addEventListener('touchend', this.onMouseUp);
     this.$refs.treeContainer.addEventListener('mousedown', this.onMouseDown);
@@ -305,14 +306,14 @@ export default {
           top: elementBlock.offsetTop,
           left: elementBlock.offsetLeft,
         };
-        const sizeFirst = this.$helper.getElementSize(elementBlock);
+        const sizeFirst = helper.getElementSize(elementBlock);
         element = document.getElementById(`item-${ids[ids.length - 1]}`);
         elementBlock = element.querySelector('.block-container__item__component');
         const offsetsLast = {
           top: elementBlock.offsetTop,
           left: elementBlock.offsetLeft,
         };
-        const sizeLast = this.$helper.getElementSize(elementBlock);
+        const sizeLast = helper.getElementSize(elementBlock);
         let divWidth = (offsetsLast.left + (sizeLast.width / 2))
           - (offsetsFirst.left + (sizeFirst.width / 2));
         const divLeft = offsetsFirst.left + (sizeFirst.width / 2);
@@ -332,7 +333,7 @@ export default {
           elementBlock = document
             .getElementById(`item-${id}`)
             .querySelector('.block-container__item__component');
-          const size = this.$helper.getElementSize(elementBlock);
+          const size = helper.getElementSize(elementBlock);
           this.generateVerticalLine({
             offsetTop: elementBlock.offsetTop,
             offsetLeft: elementBlock.offsetLeft,
@@ -367,7 +368,7 @@ export default {
         const lastElement = document.getElementById(`item-${ids[ids.length - 1]}`);
         const lastElementBlock = element.querySelector('.block-container__item__component');
         const header = lastElementBlock.querySelector('.card__header');
-        const headerHeight = this.$helper.getElementSize(header).height;
+        const headerHeight = helper.getElementSize(header).height;
         div = document.createElement('div');
         div.classList = 'tree-line';
         div.style.background = '#A8ADB5';
@@ -379,7 +380,7 @@ export default {
         lastElement.prepend(div);
       } else {
         const header = elementBlock.querySelector('.card__header');
-        const headerHeight = this.$helper.getElementSize(header).height;
+        const headerHeight = helper.getElementSize(header).height;
         div = document.createElement('div');
         div.classList = 'tree-line';
         div.style.background = '#A8ADB5';
@@ -394,7 +395,7 @@ export default {
         element = document.getElementById(`item-${id}`);
         elementBlock = element.querySelector('.block-container__item__component');
         const header = elementBlock.querySelector('.card__header');
-        const headerHeight = this.$helper.getElementSize(header).height;
+        const headerHeight = helper.getElementSize(header).height;
         div = document.createElement('div');
         div.classList = 'tree-line';
         div.style.background = '#A8ADB5';
@@ -537,7 +538,7 @@ export default {
     },
     onChangeZoom(delta) {
       const container = document.querySelector('.tree');
-      const { width, height } = this.$helper.getElementSize(container);
+      const { width, height } = helper.getElementSize(container);
       this.changeZoom(width / 2, height / 2, delta);
     },
     onMouseEnter(element) {
@@ -609,7 +610,7 @@ export default {
       const currentPositionNumber = this.currentItem.children
         .findIndex((children) => children.id === sortForm.currentId) + 1;
       if (currentPositionNumber !== sortForm.positionNumber) {
-        this.$helper.swapArrayElements(
+        helper.swapArrayElements(
           this.currentItem.children,
           currentPositionNumber - 1,
           sortForm.positionNumber - 1,
@@ -648,7 +649,7 @@ export default {
         currentPositionNumber = this.currentItem.children
           .findIndex((children) => children.id === sortForm.currentId) + 1;
         if (currentPositionNumber !== sortForm.positionNumber) {
-          this.$helper.swapArrayElements(
+          helper.swapArrayElements(
             this.currentItem.children,
             currentPositionNumber - 1,
             sortForm.positionNumber - 1,
@@ -714,7 +715,7 @@ export default {
       const element = document.getElementById(`item-${id}`)
         .querySelector('.block-container__item__component');
       if (container && element) {
-        const containerSize = this.$helper.getElementSize(container);
+        const containerSize = helper.getElementSize(container);
         const elementSize = element.getBoundingClientRect();
         const elementPosition = {
           left: element.offsetLeft * this.zoom.scale,
@@ -775,7 +776,7 @@ export default {
             let isFind = false;
             el.children.forEach((children) => {
               if (children.id === value) {
-                this.$helper.remove(el.children, children);
+                helper.remove(el.children, children);
                 isFind = true;
                 resolve(true);
               }

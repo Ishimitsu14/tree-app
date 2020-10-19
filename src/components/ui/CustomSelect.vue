@@ -31,6 +31,7 @@
 
 <script>
 import _ from 'underscore';
+import helper from '../../helper';
 
 export default {
   name: 'CustomSelect',
@@ -117,7 +118,7 @@ export default {
       if (e.target.value !== '') {
         // eslint-disable-next-line consistent-return
         this.matchedItems = _.filter(this.list, (item) => {
-          if (this.$helper.startsWith(item.label, e.target.value)) {
+          if (helper.startsWith(item.label, e.target.value)) {
             return item;
           }
         });

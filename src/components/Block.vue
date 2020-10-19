@@ -34,6 +34,7 @@ import Type3 from './cards/Type3.vue';
 import Type4 from './cards/Type4.vue';
 import Type5 from './cards/Type5.vue';
 import Actions from './Actions.vue';
+import helper from '../helper';
 
 export default {
   name: 'Block',
@@ -87,7 +88,7 @@ export default {
       let maxHeight = 0;
       this.$refs.item.forEach((item) => {
         const element = item.querySelector('.block-container__item__component');
-        const { height } = this.$helper.getElementSize(element);
+        const { height } = helper.getElementSize(element);
         if (maxHeight < height) {
           maxHeight = height;
         }

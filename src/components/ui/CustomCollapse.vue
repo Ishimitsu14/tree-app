@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import helper from '../../helper';
+
 export default {
   name: 'CustomCollapse',
   props: {
@@ -65,7 +67,7 @@ export default {
     };
   },
   mounted() {
-    this.slotHeight = this.$helper.getElementSize(this.$refs.slot).height;
+    this.slotHeight = helper.getElementSize(this.$refs.slot).height;
   },
   methods: {
     onShow() {

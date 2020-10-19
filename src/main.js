@@ -7,7 +7,6 @@ import helper from './helper';
 
 Vue.use(VModal, { componentName: 'modal' });
 Vue.config.productionTip = false;
-Vue.prototype.$helper = helper;
 Vue.use(VTooltip, { defaultOffset: 5 });
 
 new Vue({
