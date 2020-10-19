@@ -1,8 +1,8 @@
 {
   "name": "tree-app",
   "homepage": "https://ishimitsu14.github.io/tree-app/",
-  "main": "./dist-npm/tree-app.js",
-  "version": "0.1.4",
+  "main": "./lib/tree-app.common.js",
+  "version": "0.1.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/Ishimitsu14/tree-app"
@@ -11,7 +11,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build-npm": "webpack --config config/webpack.config.js",
+    "build-npm": "vue-cli-service build --target lib --name tree-app src/lib.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
