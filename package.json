@@ -2,7 +2,7 @@
   "name": "tree-app",
   "homepage": "https://ishimitsu14.github.io/tree-app/",
   "main": "./lib/tree-app.common.js",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "repository": {
     "type": "git",
     "url": "https://github.com/Ishimitsu14/tree-app"
