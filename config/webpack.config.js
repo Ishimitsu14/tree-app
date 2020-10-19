@@ -2,10 +2,10 @@ const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
-  entry: path.resolve(`${__dirname}./../src/index.js`),
+  entry: path.resolve(`${__dirname}./../src/lib.js`),
   output: {
     path: path.resolve(`${__dirname}./../dist-npm`),
-    filename: 'v-tree.js',
+    filename: 'tree-app.js',
   },
   module: {
     rules: [
