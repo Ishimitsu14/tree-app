@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <tree :tree="tree" :leader-list="leaderList"/>
+    <main-tree :tree="tree" :leader-list="leaderList"/>
   </div>
 </template>
 
 <script>
-import Tree from './components/Tree.vue';
+import MainTree from './components/MainTree.vue';
 
 export default {
   name: 'App',
@@ -284,7 +284,7 @@ export default {
     };
   },
   components: {
-    Tree,
+    MainTree,
   },
 };
 </script>

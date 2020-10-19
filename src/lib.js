@@ -1,3 +1,3 @@
-import Tree from './components/Tree.vue';
+import MainTree from './components/MainTree.vue';
 
-export default Tree;
+export default MainTree;

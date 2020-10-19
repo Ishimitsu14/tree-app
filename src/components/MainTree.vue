@@ -107,7 +107,7 @@ import StaffList from './modals/StaffList.vue';
 import User from './modals/User.vue';
 
 export default {
-  name: 'Tree',
+  name: 'MainTree',
   components: {
     User,
     StaffList,
