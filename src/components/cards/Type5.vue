@@ -84,7 +84,7 @@ export default {
         return this.item.avatar;
       }
       // eslint-disable-next-line global-require
-      return require('../../assets/img/avatar.png');
+      return require('../../assets/img/avatar.svg');
     },
     staff() {
       const staff = [];
