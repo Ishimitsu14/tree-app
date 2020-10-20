@@ -1,5 +1,5 @@
 <template>
-  <div class="tree">
+  <div class="tree" ref="component">
     <search :items="items" :on-search="searchBlock" />
     <div class="tree__zoom">
       <button
@@ -747,11 +747,16 @@ export default {
           .querySelector('.block-container__item__component');
         const actions = document.querySelector('.controls');
         if (element) {
+          const treeRect = this.$refs.component.getBoundingClientRect();
           const elementRect = element.getBoundingClientRect();
+          const relativeElementPos = {
+            left: elementRect.left - treeRect.left,
+            top: elementRect.top - treeRect.top,
+          };
           const position = {
-            left: (elementRect.left - document.body.scrollLeft)
+            left: (relativeElementPos.left - document.body.scrollLeft)
               + (element.offsetWidth * this.zoom.scale - actions.offsetWidth) + 15,
-            top: (elementRect.top - document.body.scrollTop) - 15,
+            top: (relativeElementPos.top - document.body.scrollTop) - 15,
           };
           this.actionComponent.$el.style.left = `${position.left}px`;
           this.actionComponent.$el.style.top = `${position.top}px`;

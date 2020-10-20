@@ -38,7 +38,7 @@
                 class="modal__staff-table__item-name"
                 @click="onOpenUser(user)"
               >
-                <img :src="require(`../../assets/img/${user.src}`)" />
+                <img :src="user.src" />
                 <span>{{ user.name }}</span>
               </div>
               <div class="modal__staff-table__item-phone">
