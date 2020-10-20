@@ -18,13 +18,13 @@
         class="arrow__top"
         @click="changeValue('up')"
       >
-        <img :src="require('../../assets/img/small-arrow-top.svg').default" />
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDEwIDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMCA1TDUgMEwwIDVIMTBaIiBmaWxsPSIjMUExQTFBIi8+Cjwvc3ZnPgo=" />
       </div>
       <div
         class="arrow__down"
         @click="changeValue('down')"
       >
-        <img :src="require('../../assets/img/small-arrow-bot.svg').default" />
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDEwIDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMCAwTDUgNUwwIDBIMTBaIiBmaWxsPSIjMUExQTFBIi8+Cjwvc3ZnPgo=" />
       </div>
     </div>
   </div>
