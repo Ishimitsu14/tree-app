@@ -96,6 +96,7 @@
 
 <script>
 import Vue from 'vue';
+import '../assets/scss/app.scss';
 import VModal from 'vue-js-modal';
 import VTooltip from 'v-tooltip';
 import { eventBus } from '../eventBus';

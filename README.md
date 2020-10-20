@@ -12,8 +12,9 @@ npm install --save tree-app
 
 ```
 import Vue from "vue";
-import vTree from 'v-tree'
-Vue.use(vTree);
+import TreeApp from 'tree-app';
+import TreeApp from 'tree-app/lib/tree-app.css';
+Vue.component('tree-app', TreeApp);
 ```
 
 ## Props
