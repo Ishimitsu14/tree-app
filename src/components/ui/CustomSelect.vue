@@ -21,7 +21,7 @@
       <li
         v-for="(item, index) in matchedItems"
         :key="index"
-        @click="setValue(item[keyValue])"
+        @click="setValue(item)"
       >
         {{ item[keyLabel] }}
       </li>
@@ -37,7 +37,7 @@ export default {
   name: 'CustomSelect',
   props: {
     value: {
-      type: [Number, String],
+      type: [Number, String, Object],
       required: true,
     },
     list: {
@@ -52,17 +52,15 @@ export default {
       type: Boolean,
       default: false,
     },
-    keyValue: {
-      type: String,
-      default() {
-        return 'value';
-      },
-    },
     keyLabel: {
       type: String,
       default() {
         return 'label';
       },
+    },
+    isUseObject: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -77,7 +75,8 @@ export default {
   },
   computed: {
     selectedLabel() {
-      const item = this.list.find((value) => value[this.keyValue] === this.selectedValue);
+      const item = this.list
+        .find((value) => JSON.stringify(value) === JSON.stringify(this.selectedValue));
       if (item) {
         return item[this.keyLabel];
       }
@@ -118,7 +117,7 @@ export default {
       if (e.target.value !== '') {
         // eslint-disable-next-line consistent-return
         this.matchedItems = _.filter(this.list, (item) => {
-          if (helper.startsWith(item.label, e.target.value)) {
+          if (helper.startsWith(item[this.keyLabel], e.target.value)) {
             return item;
           }
         });

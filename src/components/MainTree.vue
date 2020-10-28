@@ -1,5 +1,5 @@
 <template>
-  <div class="tree" ref="component">
+  <div class="tree" ref="component" v-if="tree">
     <search :items="items" :on-search="searchBlock" />
     <div class="tree__zoom">
       <button
@@ -125,7 +125,7 @@ export default {
     Block,
   },
   props: {
-    tree: {
+    parentTree: {
       type: [Array, Object],
       required: true,
     },
@@ -174,6 +174,9 @@ export default {
     };
   },
   computed: {
+    tree() {
+      return JSON.parse(JSON.stringify(this.parentTree));
+    },
     items() {
       if (this.tree instanceof Array) {
         return this.tree;
@@ -373,7 +376,7 @@ export default {
       if (ids.length > 1) {
         const lastElement = document.getElementById(`item-${ids[ids.length - 1]}`);
         const lastElementBlock = element.querySelector('.block-container__item__component');
-        const header = lastElementBlock.querySelector('.card__header');
+        const header = lastElementBlock.querySelector('.tree-card__header');
         const headerHeight = helper.getElementSize(header).height;
         div = document.createElement('div');
         div.classList = 'tree-line';
@@ -385,7 +388,7 @@ export default {
         div.style.top = `${topPoint}px`;
         lastElement.prepend(div);
       } else {
-        const header = elementBlock.querySelector('.card__header');
+        const header = elementBlock.querySelector('.tree-card__header');
         const headerHeight = helper.getElementSize(header).height;
         div = document.createElement('div');
         div.classList = 'tree-line';
@@ -400,7 +403,7 @@ export default {
       ids.forEach((id) => {
         element = document.getElementById(`item-${id}`);
         elementBlock = element.querySelector('.block-container__item__component');
-        const header = elementBlock.querySelector('.card__header');
+        const header = elementBlock.querySelector('.tree-card__header');
         const headerHeight = helper.getElementSize(header).height;
         div = document.createElement('div');
         div.classList = 'tree-line';
@@ -606,8 +609,10 @@ export default {
       await this.deleteElementById(id);
       await this.updateComponent();
       this.$emit('onDelete', id);
+      this.$emit('onUpdateTree', this.tree[0]);
     },
     async onSaveAdd({ cardForm, sortForm }) {
+      const parentId = this.currentItem.id;
       const newItem = JSON.parse(JSON.stringify(cardForm));
       await this.searchById(sortForm.parentId);
       newItem.type = this.currentItem.type < 5 ? this.currentItem.type + 1 : 5;
@@ -623,13 +628,17 @@ export default {
         );
       }
       await this.updateComponent();
-      this.$emit('onAdd', newItem.id);
+      this.$emit('onAdd', { ...newItem, parentId });
+      this.$emit('onUpdateTree', this.tree[0]);
     },
     async onSaveEdit({ cardForm, sortForm }) {
+      const parentId = this.currentItem.id;
       this.saveCardFormEdit(cardForm);
       await this.saveSortFormEdit(sortForm);
       await this.updateComponent();
-      this.$emit('onEdit', sortForm.currentId);
+      await this.searchById(sortForm.currentId);
+      this.$emit('onEdit', { ...this.currentItem, parentId });
+      this.$emit('onUpdateTree', this.tree[0]);
     },
     async saveSortFormEdit(sortForm) {
       let newItem = null;
@@ -672,6 +681,9 @@ export default {
       }
       if (cardForm.name) {
         this.$set(this.currentItem, 'name', cardForm.name);
+      }
+      if (cardForm.leaderId) {
+        this.$set(this.currentItem, 'leaderId', cardForm.leaderId);
       }
       if (cardForm.number) {
         this.$set(this.currentItem, 'number', cardForm.number);
@@ -716,30 +728,6 @@ export default {
       const { x, y } = this.translate;
       this.transform = `translate(${x}px, ${y}px) scale(${scale}, ${scale})`;
     },
-    searchBlock(id) {
-      const container = document.querySelector('.tree');
-      const element = document.getElementById(`item-${id}`)
-        .querySelector('.block-container__item__component');
-      if (container && element) {
-        const containerSize = helper.getElementSize(container);
-        const elementSize = element.getBoundingClientRect();
-        const elementPosition = {
-          left: element.offsetLeft * this.zoom.scale,
-          top: element.offsetTop * this.zoom.scale,
-        };
-        this.translate.x = (containerSize.width / 2) - elementPosition.left
-          - (elementSize.width / 2);
-        this.zoom.pos.x = this.translate.x;
-        this.translate.y = (containerSize.height / 2) - elementPosition.top
-          - (elementSize.height / 2);
-        this.zoom.pos.y = this.translate.y;
-        this.setTransform();
-        this.$emit('onSearch', id);
-        return true;
-      }
-      this.$emit('onSearch', false);
-      return false;
-    },
     async setActionPosition() {
       await this.$nextTick();
       if (this.actionComponent && this.currentActionId) {
@@ -780,6 +768,30 @@ export default {
         deepSearch(this.items, id);
       });
     },
+    searchBlock(id) {
+      const container = document.querySelector('.tree');
+      const element = document.getElementById(`item-${id}`)
+        .querySelector('.block-container__item__component');
+      if (container && element) {
+        const containerSize = helper.getElementSize(container);
+        const elementSize = element.getBoundingClientRect();
+        const elementPosition = {
+          left: element.offsetLeft * this.zoom.scale,
+          top: element.offsetTop * this.zoom.scale,
+        };
+        this.translate.x = (containerSize.width / 2) - elementPosition.left
+          - (elementSize.width / 2);
+        this.zoom.pos.x = this.translate.x;
+        this.translate.y = (containerSize.height / 2) - elementPosition.top
+          - (elementSize.height / 2);
+        this.zoom.pos.y = this.translate.y;
+        this.setTransform();
+        this.$emit('onSearch', id);
+        return true;
+      }
+      this.$emit('onSearch', false);
+      return false;
+    },
     deleteElementById(id) {
       return new Promise((resolve) => {
         const deepSearch = (array, value) => array.some((el) => {
@@ -806,6 +818,12 @@ export default {
     // eslint-disable-next-line func-names
     'zoom.scale': function (value) {
       this.isDetailView = value > 0.4;
+    },
+    parentTree: {
+      handler() {
+        this.updateComponent();
+      },
+      deep: true,
     },
   },
 };

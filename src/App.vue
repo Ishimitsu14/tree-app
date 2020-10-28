@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <main-tree :tree="tree" :leader-list="leaderList"/>
+    <main-tree :parent-tree="tree" :leader-list="leaderList"/>
   </div>
 </template>
 
@@ -13,6 +13,7 @@ export default {
     return {
       tree: {
         id: 1,
+        leaderId: 1,
         name: 'Сарычев Михаил',
         position: 'Владелец',
         second_position: 'Руководитель',
@@ -22,6 +23,7 @@ export default {
         children: [
           {
             id: 2,
+            leaderId: 2,
             name: 'Петров Василий',
             position: 'Генеральный Директор',
             second_position: 'Руководитель',
@@ -30,6 +32,7 @@ export default {
             children: [
               {
                 id: 3,
+                leaderId: 3,
                 name: 'Иванова Екатерина',
                 position: 'Административный директор',
                 second_position: 'Руководитель',
@@ -39,6 +42,7 @@ export default {
               },
               {
                 id: 4,
+                leaderId: 4,
                 name: 'Рыжиков Генадий',
                 position: 'Технический директор',
                 second_position: 'Руководитель',
@@ -47,6 +51,7 @@ export default {
                 children: [
                   {
                     id: 12,
+                    leaderId: 12,
                     name: 'Горин Генадий',
                     position: 'Кто-то',
                     second_position: 'Руководитель',
@@ -60,6 +65,7 @@ export default {
               },
               {
                 id: 5,
+                leaderId: 5,
                 name: 'Катеринин Александр',
                 position: 'Директор по развитию',
                 second_position: 'Руководитель',
@@ -68,6 +74,7 @@ export default {
                 children: [
                   {
                     id: 6,
+                    leaderId: 6,
                     name: 'Порядин Сергей',
                     position: 'Руководитель',
                     second_position: 'Руководитель',
@@ -79,6 +86,7 @@ export default {
                     children: [
                       {
                         id: 21,
+                        leaderId: 21,
                         name: 'Порядин Сергей (5)',
                         position: 'Руководитель',
                         second_position: 'Руководитель',
@@ -91,6 +99,7 @@ export default {
                       },
                       {
                         id: 22,
+                        leaderId: 22,
                         name: 'asdadsasdasddas',
                         position: 'Руководитель',
                         second_position: 'Руководитель',
@@ -102,6 +111,7 @@ export default {
                         children: [
                           {
                             id: 51,
+                            leaderId: 51,
                             name: 'Имя Фамилия (1)',
                             position: 'Руководитель',
                             second_position: 'Руководитель',
@@ -176,6 +186,7 @@ export default {
                           },
                           {
                             id: 52,
+                            leaderId: 52,
                             name: 'Имя Фамилия (2)',
                             position: 'Руководитель',
                             second_position: 'Руководитель',
@@ -187,6 +198,7 @@ export default {
                             children: [
                               {
                                 id: 62,
+                                leaderId: 62,
                                 name: 'Имя Фамилия (3)',
                                 position: 'Руководитель',
                                 second_position: 'Руководитель',
@@ -203,6 +215,7 @@ export default {
                       },
                       {
                         id: 23,
+                        leaderId: 23,
                         name: 'Порядин Сергей(3)',
                         position: 'Руководитель',
                         second_position: 'Руководитель',
@@ -213,6 +226,7 @@ export default {
                         children: [
                           {
                             id: 71,
+                            leaderId: 71,
                             name: 'Имя Фамилия (4)',
                             position: 'Руководитель',
                             second_position: 'Руководитель',
@@ -225,6 +239,7 @@ export default {
                           },
                           {
                             id: 72,
+                            leaderId: 72,
                             name: 'Имя Фамилия (5)',
                             position: 'Руководитель',
                             second_position: 'Руководитель',
@@ -241,6 +256,7 @@ export default {
                   },
                   {
                     id: 7,
+                    leaderId: 7,
                     name: 'Порядин Сергей(2)',
                     position: 'Руководитель',
                     color: '#E8C567',
@@ -252,6 +268,7 @@ export default {
                   },
                   {
                     id: 8,
+                    leaderId: 8,
                     name: 'Порядин Сергей(32)',
                     position: 'Руководитель',
                     color: '#E8C567',
@@ -262,6 +279,7 @@ export default {
                   },
                   {
                     id: 9,
+                    leaderId: 9,
                     name: 'Порядин Сергей(4)',
                     position: 'Руководитель',
                     color: '#E8C567',
@@ -278,8 +296,8 @@ export default {
         ],
       },
       leaderList: [
-        { label: 'Петя Пупкин' },
-        { label: 'Вася Серябкин' },
+        { name: 'Петя Пупкин', id: 782 },
+        { name: 'Вася Серябкин', id: 783 },
       ],
     };
   },

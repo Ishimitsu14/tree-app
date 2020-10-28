@@ -86,7 +86,7 @@ export default {
             children: [],
           };
           this.sortForm = {
-            currentId: this.flatList[this.flatList.length - 1].id + 10,
+            currentId: Math.floor(1000 + Math.random() * 9000),
             parentId: this.item.id,
             positionNumber: '',
           };

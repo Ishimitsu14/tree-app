@@ -4,19 +4,19 @@
     @mouseenter="$emit('onMouseEnter', $event)"
     @mouseleave="$emit('onMouseLeave', $event)"
   >
-    <div class="card">
+    <div class="tree-card">
       <div
         :style="`background: ${item.color}`"
-        class="card__header"
+        class="tree-card__header"
       >
         <span v-if="!!item.number && item.number !== ''" class="number">{{ item.number }}</span>
         <span class="position">{{ item.position }}</span>
       </div>
-      <div class="card__body">
-        <div class="card__body__avatar">
+      <div class="tree-card__body">
+        <div class="tree-card__body__avatar">
           <img :src="avatar" />
         </div>
-        <div class="card__body__info">
+        <div class="tree-card__body__info">
           <span class="name">{{ item.name }}</span>
           <span
             v-if="item.second_position"
@@ -27,7 +27,7 @@
         </div>
       </div>
       <div
-        class="card__footer"
+        class="tree-card__footer"
       >
         <div class="title">
           ЦКП
@@ -66,10 +66,10 @@ export default {
   width: 680px;
 
   &.hide-info {
-    .card__body, .card__footer {
+    .tree-card__body, .tree-card__footer {
       display: none;
     }
-    .card__header {
+    .tree-card__header {
       height: 100%;
       .position {
         font-size: 64px;
@@ -80,7 +80,7 @@ export default {
     }
   }
 
-  .card {
+  .tree-card {
     position: relative;
     overflow: hidden;
     border-radius: 7px;

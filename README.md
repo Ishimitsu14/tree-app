@@ -25,6 +25,7 @@ Vue.component('tree-app', TreeApp);
 | Prop       | Type               | Example Value | isRequired |
 | ---------- |------------------  | ------------  | ------     |
 | id         | Number             | 1             | true       |
+| leaderId   | Number             | 1             | true       |
 | name       | String             | John Conor    | true       |
 | position   | String             | Owner         | true       |
 | number     | Number             | 10            | false      |
@@ -51,6 +52,7 @@ Vue.component('tree-app', TreeApp);
 ```
 {
     id: 2,
+    leaderId: 2,
     name: 'Sara Conor',
     position: 'General Manager',
     second_position: 'Leader',
@@ -59,6 +61,7 @@ Vue.component('tree-app', TreeApp);
     children: [
         {
             id: 3,
+            leaderId: 3,
             name: 'Jonh Conor',
             position: 'Manager`s Assistant',
             second_position: 'Assistant Manager',
@@ -85,7 +88,8 @@ Vue.component('tree-app', TreeApp);
 ### Leader List
 | Prop       | Type               | Example Value | isRequired |
 | ---------- |------------------  | ------------  | ------     |
-| label      | string             | John Conor    | true       |
+| name       | string             | John Conor    | true       |
+| id         | number             | 1   | true       |
 
 ###### Must be array, used for 'leader' in change and add modals
 
@@ -94,7 +98,8 @@ Vue.component('tree-app', TreeApp);
 | Event             | Return      | Description                              |
 | ----------        |------------ | --------------------------------------   |
 | onReady           | null        | Emit when component is mounted           |
-| onDelete          | Id of user  | Emit when deleted item                   |
-| onAdd             | Id of user  | Emit when added item                     |
-| onEdit            | Id of user  | Emit when edited item                    |
+| onDelete          | Id of item  | Emit when deleted item                   |
+| onAdd             | Added item  | Emit when added item                     |
+| onEdit            | Changed item| Emit when edited item                    |
+| onUpdateTree      | Changed tree| Emit when tree is changed                |
 | onOpenUserProfile | Id of user  | Emit when click on user open user profile|

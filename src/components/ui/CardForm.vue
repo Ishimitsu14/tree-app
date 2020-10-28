@@ -16,9 +16,9 @@
       <custom-select
         label="Руководитель"
         :list="leaderList"
-        v-model="form.name"
-        key-label="label"
-        key-value="label"
+        @input="onSelectLeader"
+        :value="{ name: form.name, id: form.leaderId }"
+        key-label="name"
       />
     </div>
     <div
@@ -59,6 +59,10 @@ export default {
   methods: {
     checkFormField(value) {
       return value || value === '';
+    },
+    onSelectLeader(leader) {
+      this.form.name = leader.name;
+      this.form.leaderId = leader.id;
     },
   },
 };

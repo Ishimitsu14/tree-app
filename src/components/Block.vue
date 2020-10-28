@@ -81,7 +81,7 @@ export default {
       this.$refs.item.forEach((item) => {
         const element = item.querySelector('.block-container__item__component');
         element.style.height = '';
-        element.querySelector('.card').style.height = '';
+        element.querySelector('.tree-card').style.height = '';
       });
     },
     setHeight() {
@@ -96,7 +96,7 @@ export default {
       this.$refs.item.forEach((item) => {
         const element = item.querySelector('.block-container__item__component');
         element.style.height = `${maxHeight}px`;
-        element.querySelector('.card').style.height = '100%';
+        element.querySelector('.tree-card').style.height = '100%';
       });
     },
   },
