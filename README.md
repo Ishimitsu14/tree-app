@@ -19,9 +19,9 @@ Vue.component('tree-app', TreeApp);
 
 ## Props
 ```
-<tree :tree="tree" :leader-list="leaderList"/>
+<tree :parent-tree="tree" :leader-list="leaderList" :is-show-controls="true"/>
 ```
-### Tree
+### Parent Tree
 | Prop       | Type               | Example Value | isRequired |
 | ---------- |------------------  | ------------  | ------     |
 | id         | Number             | 1             | true       |

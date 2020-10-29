@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <main-tree :parent-tree="tree" :leader-list="leaderList"/>
+    <main-tree :parent-tree="tree" :leader-list="leaderList" :is-show-controls="isShowControls"/>
   </div>
 </template>
 
@@ -11,6 +11,7 @@ export default {
   name: 'App',
   data() {
     return {
+      isShowControls: false,
       tree: {
         id: 1,
         leaderId: 1,

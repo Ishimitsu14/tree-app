@@ -125,6 +125,10 @@ export default {
     Block,
   },
   props: {
+    isShowControls: {
+      type: Boolean,
+      default: true,
+    },
     parentTree: {
       type: [Array, Object],
       required: true,
@@ -198,39 +202,49 @@ export default {
     document.addEventListener('touchend', this.onMouseUp);
     this.$refs.treeContainer.addEventListener('mousedown', this.onMouseDown);
     this.$refs.treeContainer.addEventListener('touchstart', this.onMouseDown);
-    this.$nextTick(() => {
-      const ActionComponent = Vue.extend(Actions);
-      this.actionComponent = new ActionComponent({
-        propsData: {
-          position: { left: 0, top: 0 },
-          item: null,
-        },
-      });
-      this.actionComponent.$mount();
-      this.buildFlatList();
-    });
+    this.buildFlatList();
   },
   methods: {
     buildFlatList() {
-      const flatList = [];
-      const generate = (items, parentId) => {
-        items.forEach((item) => {
-          const childrenIds = [];
-          if (item.children && item.children.length > 0) {
-            item.children.forEach((children) => childrenIds.push(children.id));
-            generate(item.children, item.id);
-          }
-          flatList.push({ ...item, parentId, childrenIds });
-          delete flatList[flatList.length - 1].children;
+      this.$nextTick(() => {
+        const flatList = [];
+        const generate = (items, parentId) => {
+          items.forEach((item) => {
+            const childrenIds = [];
+            if (item.children && item.children.length > 0) {
+              item.children.forEach((children) => childrenIds.push(children.id));
+              generate(item.children, item.id);
+            }
+            flatList.push({ ...item, parentId, childrenIds });
+            delete flatList[flatList.length - 1].children;
+          });
+        };
+        generate(this.items, null);
+        flatList.sort((a, b) => {
+          const x = a.id; const y = b.id;
+          // eslint-disable-next-line no-nested-ternary
+          return ((x < y) ? -1 : ((x > y) ? 1 : 0));
         });
-      };
-      generate(this.items, null);
-      flatList.sort((a, b) => {
-        const x = a.id; const y = b.id;
-        // eslint-disable-next-line no-nested-ternary
-        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        this.flatList = flatList;
       });
-      this.flatList = flatList;
+    },
+    mountActionComponent() {
+      this.$nextTick(() => {
+        const ActionComponent = Vue.extend(Actions);
+        this.actionComponent = new ActionComponent({
+          propsData: {
+            position: { left: 0, top: 0 },
+            item: null,
+          },
+        });
+        this.actionComponent.$mount();
+      });
+    },
+    destroyActionComponent() {
+      if (this.actionComponent) {
+        this.actionComponent.$destroy();
+        this.actionComponent = null;
+      }
     },
     generateLines(items, withClear = false) {
       const lines = this.$refs.tree.querySelectorAll('.tree-line');
@@ -552,7 +566,7 @@ export default {
     },
     onMouseEnter(element) {
       const id = element.target.parentNode.id.split('-')[1];
-      if (id) {
+      if (id && this.actionComponent) {
         this.currentActionId = id;
         this.searchById(id);
         this.setActionPosition();
@@ -560,7 +574,7 @@ export default {
       }
     },
     onMouseLeave($event) {
-      if ($event.toElement && $event.toElement.parentNode) {
+      if ($event.toElement && $event.toElement.parentNode && this.actionComponent) {
         const { parentNode } = $event.toElement.parentNode;
         const { classList } = parentNode;
         if (classList.contains('block-container__item-children')
@@ -824,6 +838,16 @@ export default {
         this.updateComponent();
       },
       deep: true,
+    },
+    isShowControls: {
+      handler(value) {
+        if (value) {
+          this.mountActionComponent();
+        } else {
+          this.destroyActionComponent();
+        }
+      },
+      immediate: true,
     },
   },
 };
