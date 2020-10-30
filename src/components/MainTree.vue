@@ -1,6 +1,6 @@
 <template>
   <div class="tree" ref="component" v-if="tree">
-    <search :items="items" :on-search="searchBlock" />
+    <search :items="flatList" :on-search="searchBlock" />
     <div class="tree__zoom">
       <button
         class="zoom-button"
@@ -54,6 +54,7 @@
         class="tree__container__workspace"
       >
         <block
+          :key="uniqueId"
           :is-detail="isDetailView"
           :items="items"
           @onIsDetail="onIsDetail"
@@ -99,6 +100,7 @@ import Vue from 'vue';
 import '../assets/scss/app.scss';
 import VModal from 'vue-js-modal';
 import VTooltip from 'v-tooltip';
+import { v4 as uuidv4 } from 'uuid';
 import { eventBus } from '../eventBus';
 import Block from './Block.vue';
 import Actions from './Actions.vue';
@@ -140,6 +142,7 @@ export default {
   },
   data() {
     return {
+      uniqueId: uuidv4(),
       isMove: false,
       timer: null,
       isDetailView: true,
@@ -456,6 +459,7 @@ export default {
       });
     },
     async updateComponent() {
+      this.uniqueId = uuidv4();
       await this.$nextTick();
       this.generateLines(this.items, true);
       this.buildFlatList();
@@ -464,7 +468,9 @@ export default {
       await this.$nextTick();
       this.currentActionId = null;
       this.currentItem = null;
-      this.actionComponent.$el.remove();
+      if (this.actionComponent) {
+        this.actionComponent.$el.remove();
+      }
     },
     async onIsDetail() {
       await this.$nextTick();
@@ -866,7 +872,7 @@ export default {
   position: relative;
 
   &__zoom {
-    z-index: 99;
+    z-index: 98;
     position: absolute;
     left: 20px;
     top: 90px;

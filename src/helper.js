@@ -10,6 +10,8 @@ const swapArrayElements = (array, indexA, indexB) => {
 
 const startsWith = (str, word) => str.toLowerCase().lastIndexOf(word.toLowerCase(), 0) === 0;
 
+const search = (str, word) => str.toLowerCase().search(word.toLowerCase()) >= 0;
+
 const addEventListenerWheel = (element, callback) => {
   if (element.addEventListener) {
     if ('onwheel' in document) {
@@ -66,6 +68,7 @@ export default {
   remove,
   swapArrayElements,
   startsWith,
+  search,
   addEventListenerWheel,
   getElementSize,
   parsePercent,

@@ -37,7 +37,7 @@ export default {
   name: 'CustomSelect',
   props: {
     value: {
-      type: [Number, String, Object],
+      type: [Number, String, Object, Boolean],
       required: true,
     },
     list: {
@@ -117,7 +117,7 @@ export default {
       if (e.target.value !== '') {
         // eslint-disable-next-line consistent-return
         this.matchedItems = _.filter(this.list, (item) => {
-          if (helper.startsWith(item[this.keyLabel], e.target.value)) {
+          if (helper.search(item[this.keyLabel], e.target.value)) {
             return item;
           }
         });

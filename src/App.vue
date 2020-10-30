@@ -11,7 +11,7 @@ export default {
   name: 'App',
   data() {
     return {
-      isShowControls: false,
+      isShowControls: true,
       tree: {
         id: 1,
         leaderId: 1,
@@ -297,6 +297,7 @@ export default {
         ],
       },
       leaderList: [
+        { name: 'Сарычев Михаил', id: 1 },
         { name: 'Петя Пупкин', id: 782 },
         { name: 'Вася Серябкин', id: 783 },
       ],

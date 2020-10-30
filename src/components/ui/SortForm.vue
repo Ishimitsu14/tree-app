@@ -4,7 +4,8 @@
       <custom-select
         label="Вышестоящее подразделение"
         :list="parentList"
-        v-model="form.parentId"
+        @input="onSelected"
+        :value="{ id: form.parentId, label: form.parentPosition }"
       />
     </div>
     <div class="form-sort__group">
@@ -49,7 +50,7 @@ export default {
         }
       });
       return this.flatList.filter((item) => !deepChildren.includes(item.id) && item.type !== 5)
-        .map((item) => ({ value: item.id, label: item.position }));
+        .map((item) => ({ id: item.id, label: item.position }));
     },
   },
   watch: {
@@ -62,6 +63,9 @@ export default {
     this.setRangeValue();
   },
   methods: {
+    onSelected(item) {
+      this.form.parentId = item.id;
+    },
     async setRangeValue() {
       await this.$nextTick();
       const positions = {

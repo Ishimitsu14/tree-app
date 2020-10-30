@@ -14,6 +14,7 @@
           :leader-list="leaderList"
         />
         <custom-collapse
+          v-if="item.type !== 1"
           title="Положение на схеме"
           description="Вышестоящее подразделение и сортировочный номер"
         >
@@ -92,15 +93,19 @@ export default {
         if (this.item && this.item.id) {
           const flatItem = this.flatList.find((item) => item.id === this.item.id);
           let positionNumber = null;
+          let parentPosition = null;
           this.flatList.forEach((item) => {
             if (item.childrenIds.includes(this.item.id)) {
               positionNumber = item.childrenIds.findIndex(((value) => value === this.item.id)) + 1;
+              parentPosition = item.position;
             }
           });
           this.sortForm = {
             currentId: this.item.id,
             parentId: flatItem && flatItem.parentId ? flatItem.parentId : null,
+            position: flatItem.position,
             positionNumber,
+            parentPosition,
           };
         }
       },
