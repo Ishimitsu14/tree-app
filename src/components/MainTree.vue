@@ -460,6 +460,12 @@ export default {
     },
     async updateComponent() {
       this.uniqueId = uuidv4();
+    },
+    async onIsDetail() {
+      await this.$nextTick();
+      this.generateLines(this.items, true);
+    },
+    async onReady() {
       await this.$nextTick();
       this.generateLines(this.items, true);
       this.buildFlatList();
@@ -471,14 +477,6 @@ export default {
       if (this.actionComponent) {
         this.actionComponent.$el.remove();
       }
-    },
-    async onIsDetail() {
-      await this.$nextTick();
-      this.generateLines(this.items, true);
-    },
-    onReady() {
-      this.generateLines(this.items);
-      this.createListeners();
       this.$emit('onReady');
     },
     onMouseWheel($event) {

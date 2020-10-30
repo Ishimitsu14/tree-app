@@ -60,8 +60,11 @@ export default {
   },
   computed: {
     isNotEmpty() {
-      const { childrenIds } = this.flatList.find((item) => item.id === this.item.id);
-      return childrenIds.length > 0 || (this.item.staff && this.item.staff.length > 0);
+      const item = this.flatList.find((i) => i.id === this.item.id);
+      if (item && item.childrenIds) {
+        return item.childrenIds.length > 0 || (this.item.staff && this.item.staff.length > 0);
+      }
+      return null;
     },
   },
   methods: {
